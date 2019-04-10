@@ -1,12 +1,14 @@
 import { fromEvent } from 'rxjs'
-import { throttleTime, scan } from 'rxjs/operators'
+import { map, scan, throttleTime } from 'rxjs/operators'
 
 const button = document.getElementById('hold-me')
-fromEvent(button, 'click').pipe(
-  throttleTime(1000),
-  scan(count => count + 1, 0) as any
-)
-.subscribe(count => console.log(`Clicked ${count} times`))
+fromEvent(button, 'click')
+  .pipe(
+    throttleTime(1000),
+    map((e: MouseEventInit) => e.clientX),
+    scan((count, clientX) => count + clientX, 0) as any
+  )
+  .subscribe(count => console.log(`Clicked ${count} times`))
 // const result = document.getElementById('hold-time')
 
 // const mouseDown = fromEvent(button, 'mousedown')
