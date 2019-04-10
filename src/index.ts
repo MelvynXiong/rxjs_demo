@@ -1,10 +1,16 @@
-import { fromEvent } from 'rxjs'
-import { scan } from 'rxjs/operators'
+// import { fromEvent } from 'rxjs'
+// import { scan } from 'rxjs/operators'
 
 const button = document.getElementById('hold-me')
-fromEvent(button, 'click')
-  .pipe(scan(count => count + 1, 0) as any)
-  .subscribe(count => console.log(`Clicked ${count} times`))
+let count = 0
+let rate = 1000
+let lastClick = Date.now() - rate
+button.addEventListener('click', () => {
+  if (Date.now() - lastClick >= rate) {
+    console.log(`Clicked ${++count} times`)
+    lastClick = Date.now()
+  }
+})
 // const result = document.getElementById('hold-time')
 
 // const mouseDown = fromEvent(button, 'mousedown')
