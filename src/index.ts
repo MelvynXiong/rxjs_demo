@@ -1,28 +1,19 @@
 import { Observable } from 'rxjs'
 
 const observable = new Observable(subscriber => {
+  console.log('hello')
+  subscriber.next(42)
   subscriber.next(1)
   subscriber.next(2)
-  subscriber.next(3)
   setTimeout(() => {
-    subscriber.next(5)
-    subscriber.complete()
-  }, 2000)
+    subscriber.next(300); // happens asynchronously
+  }, 1000);
 })
+console.log('start')
+observable.subscribe(x => console.log(x))
+observable.subscribe(x => console.log(x))
+console.log('end')
 
-console.log('just before subscribe')
-observable.subscribe({
-  next(x) {
-    console.log('got value ' + x)
-  },
-  error(err) {
-    console.log('something wrong ' + err)
-  },
-  complete() {
-    console.log('done')
-  },
-})
-console.log('just after subscribe')
 // const result = document.getElementById('hold-time')
 
 // const mouseDown = fromEvent(button, 'mousedown')
