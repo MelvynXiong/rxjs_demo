@@ -1,17 +1,16 @@
 import { Observable } from 'rxjs'
 
 const observable = new Observable(subscriber => {
-  console.log('hello')
-  subscriber.next(42)
   subscriber.next(1)
   subscriber.next(2)
+  subscriber.complete()
   setTimeout(() => {
-    subscriber.next(300); // happens asynchronously
+    subscriber.next('hi'); // happens asynchronously
   }, 1000);
 })
 console.log('start')
-observable.subscribe(x => console.log(x))
-observable.subscribe(x => console.log(x))
+const subscription = observable.subscribe(x => console.log(x))
+subscription.unsubscribe()
 console.log('end')
 
 // const result = document.getElementById('hold-time')
