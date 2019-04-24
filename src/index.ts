@@ -1,16 +1,12 @@
-import { interval, Subject } from 'rxjs'
+import { Observable, of } from 'rxjs'
 
-const subject = new Subject<number>()
+const people = of('jerry', 'tom')
+function map(source, callback) {
+  return new Observable(observer => {
+    observer.next('dfas')
+    return source.subscribe(val => observer.next(callback(val)))
+  })
+}
+const helloPeople = map(people, item => item + ' Hello~')
 
-subject.subscribe({
-  next: v => console.log(`observerA: ${v}`),
-})
-setTimeout(
-  () =>
-    subject.subscribe({
-      next: v => console.log(`observerB: ${v}`),
-    }),
-  4000
-)
-const observable = interval(1000)
-observable.subscribe(subject)
+helloPeople.subscribe(console.log)
