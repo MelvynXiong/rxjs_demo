@@ -6,49 +6,54 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <style type="text/css">
-      * {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-      }
-
       html,
       body {
-        margin: 0;
+        height: 100%;
+        background-color: white;
         padding: 0;
+        margin: 0;
       }
-      img {
-        position: absolute;
-        border-radius: 50%;
-        border: 3px white solid;
-        transform: translate3d(0,0,0);
+
+      .autocomplete {
+        position: relative;
+        display: inline-block;
+        margin: 20px;
+      }
+
+      .input {
+        width: 200px;
+        border: none;
+        border-bottom: 1px solid black;
+
+        padding: 0;
+        line-height: 24px;
+        font-size: 16px;
+      }
+      .input:focus {
+        outline: none;
+        border-bottom-color: blue;
+      }
+
+      .suggest {
+        width: 200px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      .suggest li {
+        cursor: pointer;
+        padding: 5px;
+      }
+      .suggest li:hover {
+        background-color: lightblue;
       }
     </style>
   </head>
   <body>
-    <img
-      src="https://res.cloudinary.com/dohtkyi84/image/upload/c_scale,w_50/v1483019072/head-cover6.jpg"
-      alt=""
-    />
-    <img
-      src="https://res.cloudinary.com/dohtkyi84/image/upload/c_scale,w_50/v1483019072/head-cover5.jpg"
-      alt=""
-    />
-    <img
-      src="https://res.cloudinary.com/dohtkyi84/image/upload/c_scale,w_50/v1483019072/head-cover4.jpg"
-      alt=""
-    />
-    <img
-      src="https://res.cloudinary.com/dohtkyi84/image/upload/c_scale,w_50/v1483019072/head-cover3.jpg"
-      alt=""
-    />
-    <img
-      src="https://res.cloudinary.com/dohtkyi84/image/upload/c_scale,w_50/v1483019072/head-cover2.jpg"
-      alt=""
-    />
-    <img
-      src="https://res.cloudinary.com/dohtkyi84/image/upload/c_scale,w_50/v1483019072/head-cover1.jpg"
-      alt=""
-    />
+    <div class="autocomplete">
+      <input class="input" type="search" id="search" autocomplete="off" />
+      <ul id="suggest-list" class="suggest"></ul>
+    </div>
   </body>
 </html>

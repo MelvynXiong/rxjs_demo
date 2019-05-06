@@ -1,25 +1,19 @@
 import { fromEvent } from 'rxjs'
-import { delay, map } from 'rxjs/operators'
+import { switchMap } from 'rxjs/operators'
 
-const imgList = document.querySelectorAll('img')
+const url =
+  'https://zh.wikipedia.org/w/api.php?action=opensearch&format=json&limit=5&origin=*'
 
-const movePos = fromEvent(document, 'mousemove').pipe(
-  map((e: MouseEvent) => ({
-    x: e.clientX,
-    y: e.clientY,
-  }))
-)
-function followMouse(DOMArr) {
-  const delayTime = 600
-  DOMArr.forEach((item, index) => {
-    const temp = movePos.pipe(
-      delay((delayTime * (Math.pow(0.65, index) + Math.cos(index / 4))) / 2)
-    )
-    temp.subscribe(
-      pos =>
-        (item.style.transform =
-          'translate3d(' + pos.x + 'px, ' + pos.y + 'px, 0)')
-    )
-  })
-}
-followMouse(imgList)
+const getSuggestList = (keyword: string) =>
+  fetch(`${url}&search=${keyword}`, { method: 'GET', mode: 'cors' }).then(res =>
+    res.json()
+  )
+const searchInput = document.getElementById('search')
+// const suggestList = document.getElementById('suggest-list')
+
+const inputWord = fromEvent(searchInput, 'change')
+// const selectItem = fromEvent(suggestList, 'click')
+
+inputWord
+  .pipe(switchMap((e: any) => getSuggestList(e.target.value)))
+  .subscribe(console.log)
